@@ -127,7 +127,7 @@ app.get("/api/bet", (req, res) => {
   }); */
 });
 
-app.post("/", (req, res) => {
+app.post("/api/test", (req, res) => {
   res.json({
     message: "Hello World",
   });
