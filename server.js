@@ -11,8 +11,9 @@ app.use(cors());
 app.get("/api/bet", (req, res) => {
   //const { array } = req.body;
   ///const data = req.body.data;
-
-  const data = [
+  console.log(req.query);
+  const data = req.query.data;
+  /* const data = [
     {
       siteName: "spreadex",
       homeWin: 1850,
@@ -90,8 +91,7 @@ app.get("/api/bet", (req, res) => {
       awayWin: 1985,
       money: 500,
     },
-  ];
-  console.log(data);
+  ]; */
   const pythonProcess = spawn("python", ["test.py"]);
   pythonProcess.stdin.write(JSON.stringify(data));
   pythonProcess.stdin.end();
