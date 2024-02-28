@@ -91,7 +91,7 @@ app.post("/api/bet", (req, res) => {
       money: 500,
     },
   ];
-
+  console.log(data);
   const pythonProcess = spawn("python", ["test.py"]);
   pythonProcess.stdin.write(JSON.stringify(data));
   pythonProcess.stdin.end();
