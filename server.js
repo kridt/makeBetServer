@@ -11,7 +11,6 @@ app.use(cors());
 app.get("/api/bet", (req, res) => {
   //const { array } = req.body;
   ///const data = req.body.data;
-  console.log(req.query);
   const data = req.query.data;
 
   data.forEach((element) => {
@@ -20,6 +19,7 @@ app.get("/api/bet", (req, res) => {
     element.awayWin = parseInt(element.awayWin);
     element.money = parseInt(element.money);
   });
+  console.log(data);
 
   /* const data = [
     {
