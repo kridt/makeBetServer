@@ -13,6 +13,14 @@ app.get("/api/bet", (req, res) => {
   ///const data = req.body.data;
   console.log(req.query);
   const data = req.query.data;
+
+  data.forEach((element) => {
+    element.homeWin = parseInt(element.homeWin);
+    element.draw = parseInt(element.draw);
+    element.awayWin = parseInt(element.awayWin);
+    element.money = parseInt(element.money);
+  });
+
   /* const data = [
     {
       siteName: "spreadex",
@@ -105,6 +113,9 @@ app.get("/api/bet", (req, res) => {
 
   pythonProcess.stderr.on("data", (data) => {
     console.error(`stderr: ${data}`);
+    res.json({
+      message: "Error",
+    });
   });
 
   pythonProcess.on("close", (code) => {
