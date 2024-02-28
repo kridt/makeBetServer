@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(cors());
 
-app.post("/api/bet", (req, res) => {
+app.get("/api/bet", (req, res) => {
   //const { array } = req.body;
   ///const data = req.body.data;
 
@@ -110,6 +110,7 @@ app.post("/api/bet", (req, res) => {
   pythonProcess.on("close", (code) => {
     console.log(`Child process exited with code ${code}`);
   });
+
   /* exec("python3 test.py", (error, stdout, stderr) => {
     if (error) {
       console.log(`error: ${error.message}`);
