@@ -4,6 +4,7 @@ const port = 3000;
 const { spawn } = require("child_process");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const e = require("express");
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -18,6 +19,7 @@ app.get("/api/bet", (req, res) => {
     element.draw = parseInt(element.draw);
     element.awayWin = parseInt(element.awayWin);
     element.money = parseInt(element.money);
+    element.name = element.name.toLowerCase();
   });
   console.log(data);
 

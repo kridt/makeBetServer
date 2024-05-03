@@ -1,18 +1,15 @@
-# Liste af betting sites med opdaterede værdier
 import json
 import sys
-sites = sys.stdin.read()
-sites = json.loads(sites)
+from itertools import product
 
-# Funktion til at generere alle mulige kombinationer og finde den mest balancerede med det højeste samlede afkast
 def find_best_combination(sites):
-    from itertools import product
-
     # Genererer alle mulige kombinationer (1, X, 2) for hver betting site
     outcomes = list(product(["1", "X", "2"], repeat=len(sites)))
     
     max_return = 0
     best_combination = None
+    best_returns = None
+    
     for outcome in outcomes:
         total_returns = [0, 0, 0]  # Indekser: 0 -> hjemmevind, 1 -> uafgjort, 2 -> udeholdvind
         for i, result in enumerate(outcome):
@@ -27,12 +24,19 @@ def find_best_combination(sites):
         if min_return > max_return:
             max_return = min_return
             best_combination = outcome
+            best_returns = total_returns
 
-    return best_combination, max_return
+    return best_combination, max_return, best_returns
+
+# Modtag data fra stdin eller en anden kilde
+sites_input = json.loads(sys.stdin.read()) 
 
 # Find den bedste kombination
-best_combination, max_return = find_best_combination(sites)
-best_combination, max_return
+best_combination, max_return, best_returns = find_best_combination(sites_input)
 
-print(json.dumps({"best_combination": best_combination, "max_return": max_return}))
-
+# Print resultatet
+print(json.dumps({
+    "best_combination": best_combination, 
+    "min_return": max_return,
+    "returns_per_outcome": best_returns
+}))
