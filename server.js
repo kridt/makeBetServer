@@ -19,7 +19,6 @@ app.get("/api/bet", (req, res) => {
     element.draw = parseInt(element.draw);
     element.awayWin = parseInt(element.awayWin);
     element.money = parseInt(element.money);
-    element.name = element.name.toLowerCase();
   });
   console.log(data);
 
