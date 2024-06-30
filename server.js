@@ -12,7 +12,7 @@ app.use(cors());
 app.get("/api/bet", (req, res) => {
   //const { array } = req.body;
   ///const data = req.body.data;
-  const data = req.query.data;
+  const data = JSON.parse(req.query.data);
 
   data.forEach((element) => {
     element.homeWin = parseInt(element.homeWin);
