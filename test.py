@@ -35,18 +35,19 @@ def find_best_combination(sites, previous_outcomes):
                 total_returns[2] += sites[i]["awayWin"]
         
         min_return = min(total_returns)
-        if min_return > max_return:
-            # Tjek forskellighed fra tidligere outcomes
-            differences = [sum(1 for a, b in zip(outcome, prev) if a != b) for prev in previous_outcomes]
-            min_difference = min(differences) if differences else float('inf')
-            
-            if min_difference > 0:  # Vi tillader ikke præcise gentagelser
-                max_return = min_return
-                best_combination = {
-                    "combination": [site["site"] for site in sites],
-                    "outcome": outcome,
-                    "difference": min_difference
-                }
+        
+        # Tjek forskellighed fra tidligere outcomes
+        differences = [sum(1 for a, b in zip(outcome, prev) if a != b) for prev in previous_outcomes]
+        min_difference = min(differences) if differences else float('inf')
+
+        # Tillad maks. 2 ens sider
+        if min_difference >= len(outcome) - 2 and min_return > max_return:
+            max_return = min_return
+            best_combination = {
+                "combination": [site["site"] for site in sites],
+                "outcome": outcome,
+                "difference": min_difference
+            }
 
     return best_combination, max_return
 
