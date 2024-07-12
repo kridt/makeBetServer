@@ -65,3 +65,4 @@ for customer_sites in customers:
 
 # Udskriv resultatet som JSON
 print(json.dumps(results))
+
