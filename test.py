@@ -1,6 +1,6 @@
 import json
 import sys
-from itertools import product, combinations
+from itertools import product
 
 # Læs betting sites data fra standard input
 customers = sys.stdin.read()
@@ -22,31 +22,27 @@ def find_best_combination(sites):
     max_return = 0
     best_combination = None
 
-    # Generer kombinationer for 1, 2 og 3 kunder
-    for num_customers in range(1, 4):
-        customer_combinations = list(combinations(sites, num_customers))
+    # Generer alle mulige kombinationer af udfald (1, X, 2) for hver betting site
+    outcomes = list(product(["1", "X", "2"], repeat=len(sites)))
+    
+    for outcome in outcomes:
+        total_returns = [0, 0, 0]  # Indekser: 0 -> hjemmevind, 1 -> uafgjort, 2 -> udeholdvind
         
-        for customer_comb in customer_combinations:
-            outcomes = list(product(["1", "X", "2"], repeat=len(customer_comb)))
-            
-            for outcome in outcomes:
-                total_returns = [0, 0, 0]  # Indekser: 0 -> hjemmevind, 1 -> uafgjort, 2 -> udeholdvind
-                
-                for i, result in enumerate(outcome):
-                    if result == "1":
-                        total_returns[0] += customer_comb[i]["homeWin"]
-                    elif result == "X":
-                        total_returns[1] += customer_comb[i]["draw"]
-                    elif result == "2":
-                        total_returns[2] += customer_comb[i]["awayWin"]
-                
-                min_return = min(total_returns)
-                if min_return > max_return:
-                    max_return = min_return
-                    best_combination = {
-                        "combination": [site["site"] for site in customer_comb],
-                        "outcome": outcome
-                    }
+        for i, result in enumerate(outcome):
+            if result == "1":
+                total_returns[0] += sites[i]["homeWin"]
+            elif result == "X":
+                total_returns[1] += sites[i]["draw"]
+            elif result == "2":
+                total_returns[2] += sites[i]["awayWin"]
+        
+        min_return = min(total_returns)
+        if min_return > max_return:
+            max_return = min_return
+            best_combination = {
+                "combination": [site["site"] for site in sites],
+                "outcome": outcome
+            }
 
     return best_combination, max_return
 
